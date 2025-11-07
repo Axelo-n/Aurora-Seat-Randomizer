@@ -42,7 +42,7 @@ function randomizeSeats() {
     const kurkul = 27;
     
     // IT rolling berdasarkan minggu (week 1 = absen 34, week 2 = absen 4, week 3 = absen 22, repeat)
-    const itOptions = [34, 4, 22];
+    const itOptions = [4, 22, 34];
     const currentWeek = getWeekNumber(new Date());
     const it = itOptions[(currentWeek - 1) % 3];
     
@@ -53,7 +53,7 @@ function randomizeSeats() {
     const tatib2 = (currentWeek % 2 === 1) ? 32 : 25;
     
     // Logistik random dari pilihan yang tersedia
-    const logistikOptions = [30, 15, 33, 31];
+    const logistikOptions = [15, 33, 31, 15];
     const logistik = logistikOptions[(currentWeek - 1) % 4];
     // const logistik = logistikOptions[Math.floor(Math.random() * logistikOptions.length)];
     

@@ -53,8 +53,9 @@ function randomizeSeats() {
     const tatib2 = (currentWeek % 2 === 1) ? 32 : 25;
     
     // Logistik random dari pilihan yang tersedia
-    const logistikOptions = [15, 30, 31, 33];
-    const logistik = logistikOptions[Math.floor(Math.random() * logistikOptions.length)];
+    const logistikOptions = [30, 15, 33, 31];
+    const logistik = logistikOptions[(currentWeek - 1) % 4];
+    // const logistik = logistikOptions[Math.floor(Math.random() * logistikOptions.length)];
     
     // Buat array 1-35 kecuali yang sudah dipakai untuk roles
     const usedNumbers = [kurkul, it, tatib1, tatib2, logistik];

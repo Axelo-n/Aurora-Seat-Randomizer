@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AU20RA Seat Randomizer</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container" id="container">
+        <h1>AU20RA Seat Randomizer</h1>
+        <p class="desc">Created by Michael Kevin - Inspired by Wesley Aldrich</p>
+        
+        <div class="main-content">
+            <div class="seating-area">
+                <div class="seat-grid" id="seatGrid">
+                    <!-- Row 1 -->
+                    <div class="seat question">?</div>
+                    <div class="seat question">?</div>
+                    <div class="seat question">?</div>
+                    <div class="seat question">?</div>
+                    <div class="seat question">?</div>
+                    <div class="seat question">?</div>
+                    <div class="seat question">?</div>
+                    <div class="seat question">?</div>
+                    
+                    <!-- Row 2 -->
+                    <div class="seat" data-seat="0">-</div>
+                    <div class="seat" data-seat="1">-</div>
+                    <div class="seat" data-seat="2">-</div>
+                    <div class="seat" data-seat="3">-</div>
+                    <div class="seat" data-seat="4">-</div>
+                    <div class="seat" data-seat="5">-</div>
+                    <div class="seat" data-seat="6">-</div>
+                    <div class="seat" data-seat="7">-</div>
+                    
+                    <!-- Row 3 -->
+                    <div class="seat question">?</div>
+                    <div class="seat" data-seat="8">-</div>
+                    <div class="seat" data-seat="9">-</div>
+                    <div class="seat" data-seat="10">-</div>
+                    <div class="seat" data-seat="11">-</div>
+                    <div class="seat" data-seat="12">-</div>
+                    <div class="seat" data-seat="13">-</div>
+                    <div class="seat" data-seat="14">-</div>
+                    
+                    <!-- Row 4 -->
+                    <div class="seat" data-seat="15">-</div>
+                    <div class="seat" data-seat="16">-</div>
+                    <div class="seat sie-tatib" data-seat="17" data-role="tatib">-</div>
+                    <div class="seat" data-seat="18">-</div>
+                    <div class="seat" data-seat="19">-</div>
+                    <div class="seat" data-seat="20">-</div>
+                    <div class="seat" data-seat="21">-</div>
+                    <div class="seat sie-tatib" data-seat="22" data-role="tatib">-</div>
+                    
+                    <!-- Row 5 -->
+                    <div class="seat" data-seat="23">-</div>
+                    <div class="seat" data-seat="24">-</div>
+                    <div class="seat" data-seat="25">-</div>
+                    <div class="seat" data-seat="26">-</div>
+                    <div class="seat" data-seat="27">-</div>
+                    <div class="seat sie-it" data-seat="28" data-role="it">-</div>
+                    <div class="seat sie-kurkul" data-seat="29" data-role="kurkul">-</div>
+                    <div class="seat sie-logistik" data-seat="30" data-role="logistik">-</div>
+                    
+                    <!-- Row 6 (with empty spaces and lecturer) -->
+                    <div class="seat empty"></div>
+                    <div class="lecturer-seat">Lecturer Seat</div>
+                    <div class="seat empty"></div>
+                    <div class="seat empty"></div>
+                    <div class="seat empty"></div>
+                    <div class="ss-cont">
+                        <button class="copy-btn" onclick="copyScreenshot()">
+                            <img src="save.svg" class="save-icon">
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="notes">
+                    <div class="role-item tatib">
+                        <div class="role-label">Sie Tatib</div>
+                        <div class="role-name" id="tatib1Name"></div>
+                        <div class="role-name" id="tatib2Name"></div>
+                    </div>
+                    
+                    <div class="role-item it">
+                        <div class="role-label">Sie IT</div>
+                        <div class="role-name" id="itName">-</div>
+                    </div>
+                    
+                    <div class="role-item kurkul">
+                        <div class="role-label">Sie Kurkul</div>
+                        <div class="role-name" id="kurkulName">-</div>
+                    </div>
+                    
+                    <div class="role-item logistik">
+                        <div class="role-label">Sie Logistik</div>
+                        <div class="role-name" id="logistikName">-</div>
+                    </div>
+                </div>
+
+                <!-- Pulau -->
+                <div class="seat" data-seat="31">-</div>
+                <div class="seat" data-seat="32">-</div>
+                <div class="seat question">?</div>
+                <div class="seat" data-seat="33">-</div>
+                <div class="seat" data-seat="34">-</div>
+                <div class="seat question">?</div>
+
+                <div class="random-cont">
+                    <button class="randomize-btn" onclick="randomizeSeats()">Randomize</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

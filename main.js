@@ -42,7 +42,7 @@ function randomizeSeats() {
     const kurkul = 27;
     
     // IT rolling berdasarkan minggu (week 1 = absen 34, week 2 = absen 4, week 3 = absen 22, repeat)
-    const itOptions = [4, 22, 34];
+    const itOptions = [4, 34, 22];  // Sila, Wilson, Rey
     const currentWeek = getWeekNumber(new Date());
     const it = itOptions[(currentWeek - 1) % 3];
     

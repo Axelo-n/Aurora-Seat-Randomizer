@@ -282,24 +282,156 @@ h1 {
     transform: translateY(0);
 }
 
-@media (max-width: 1000px) {
+/* Mobile Portrait - Show message to rotate */
+@media (max-width: 1000px) and (orientation: portrait) {
     .main-content {
-        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+    }
+
+    .main-content::before {
+        content: 'Please rotate your device to landscape mode';
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5em;
+        text-align: center;
+        padding: 20px;
+        background: rgba(11, 17, 32, 0.9);
+        border-radius: 10px;
+        width: 80%;
+        z-index: 1000;
+    }
+
+    .seating-area,
+    .sidebar {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+}
+
+/* Mobile Landscape */
+@media (max-width: 1000px) and (orientation: landscape) {
+    body {
+        padding: 10px 15px;
+    }
+
+    .container {
+        padding: 5px 15px 0 15px;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        line-height: 1.3rem;
+        letter-spacing: 4px;
+        margin-top: 8px;
+    }
+
+    .desc {
+        font-size: 0.75em;
+        margin-bottom: 8px;
+    }
+
+    .main-content {
+        flex-direction: row;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .seating-area {
+        flex: 1;
     }
 
     .seat-grid {
-        grid-template-columns: repeat(8, 60px);
-        gap: 8px;
+        grid-template-columns: repeat(8, 45px);
+        gap: 5px;
+        margin-bottom: 10px;
     }
 
     .seat {
-        width: 60px;
-        height: 60px;
+        width: 45px;
+        height: 45px;
+        font-size: 0.9em;
+        border: 1px solid #5a5a6e;
+    }
+
+    .seat.question {
         font-size: 1.2em;
+    }
+
+    .lecturer-seat {
+        font-size: 0.85em;
+        height: 45px;
+    }
+
+    .sidebar {
+        display: grid;
+        grid-template-columns: repeat(3, 45px);
+        gap: 5px;
+        margin-bottom: 10px;
+    }
+
+    .notes {
+        grid-column: 1 / 4;
+        height: auto;
+        padding: 5px;
+    }
+
+    .role-item {
+        margin-bottom: 5px;
+        padding: 3px 5px;
+    }
+
+    .role-label {
+        font-size: 0.75em;
+        margin-bottom: 2px;
+    }
+
+    .role-name {
+        font-size: 0.85em;
+    }
+
+    .random-cont {
+        grid-column: 1 / 4;
+        height: 50px;
+    }
+
+    .randomize-btn {
+        padding: 8px;
+        font-size: 0.9em;
+        letter-spacing: 1px;
+    }
+
+    .copy-btn {
+        width: 70px;
+        height: 45px;
+    }
+}
+
+/* Tablet */
+@media (max-width: 1000px) and (orientation: landscape) and (min-height: 600px) {
+    .seat-grid {
+        grid-template-columns: repeat(8, 55px);
+        gap: 7px;
+    }
+
+    .seat {
+        width: 55px;
+        height: 55px;
+        font-size: 1em;
+        border: 1.5px solid #5a5a6e;
+    }
+
+    .sidebar {
+        grid-template-columns: repeat(3, 55px);
+        gap: 7px;
     }
 
     h1 {
         font-size: 1.8em;
-        letter-spacing: 4px;
     }
 }

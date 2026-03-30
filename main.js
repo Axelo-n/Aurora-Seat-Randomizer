@@ -39,26 +39,18 @@ const studentNames = {
 
 function randomizeSeats() {
     // Tentukan roles dulu
-    const kurkul = 27;
+    const kurkul = 17;
     
     // IT rolling berdasarkan minggu (week 1 = absen 34, week 2 = absen 4, week 3 = absen 22, repeat)
-    const itOptions = [34, 22, 4];  // Wilson, Rey, Sila
+    const itOptions = [15, 4, 22];  // Wilson, Rey, Sila
     const currentWeek = getWeekNumber(new Date());
     const it = itOptions[(currentWeek - 1) % 3];
     
-    // Tatib ada 2 kursi yang tukar-tukeran
-    // Minggu ganjil: tatib1=25, tatib2=32
-    // Minggu genap: tatib1=32, tatib2=25
-    const tatib1 = (currentWeek % 2 === 1) ? 25 : 32;
-    const tatib2 = (currentWeek % 2 === 1) ? 32 : 25;
-    
-    // Logistik random dari pilihan yang tersedia
-    const logistikOptions = [30, 15, 33, 31];
-    const logistik = logistikOptions[(currentWeek - 1) % 4];
-    // const logistik = logistikOptions[Math.floor(Math.random() * logistikOptions.length)];
+    // Tatib adalah student #2 (Beben), posisi random di row 3
+    const tatib = 2;
     
     // Buat array 1-35 kecuali yang sudah dipakai untuk roles
-    const usedNumbers = [kurkul, it, tatib1, tatib2, logistik];
+    const usedNumbers = [kurkul, it, tatib];
     let availableNumbers = Array.from({length: 35}, (_, i) => i + 1)
         .filter(num => !usedNumbers.includes(num));
     
@@ -71,8 +63,43 @@ function randomizeSeats() {
     // Ambil semua kursi
     const seats = document.querySelectorAll('.seat[data-seat]');
     
-    // Track tatib assignment
-    let tatibCount = 0;
+    // Find kurkul dan it seats (tetap fixed)
+    const kurkulSeat = Array.from(seats).find(seat => {
+        const seatNum = parseInt(seat.dataset.seat);
+        return seatNum === 29; // data-seat 29
+    });
+    const itSeat = Array.from(seats).find(seat => {
+        const seatNum = parseInt(seat.dataset.seat);
+        return seatNum === 28; // data-seat 28
+    });
+    
+    // Assign role ke kurkul dan it seats
+    if (kurkulSeat) {
+        kurkulSeat.dataset.role = 'kurkul';
+        kurkulSeat.classList.add('sie-kurkul');
+    }
+    if (itSeat) {
+        itSeat.dataset.role = 'it';
+        itSeat.classList.add('sie-it');
+    }
+    
+    // Randomize tatib position di row 3 (data-seat 8-14)
+    const row3Seats = Array.from(seats).filter(seat => {
+        const seatNum = parseInt(seat.dataset.seat);
+        return seatNum >= 8 && seatNum <= 14;
+    });
+    const randomTatibIndex = Math.floor(Math.random() * row3Seats.length);
+    const tatibSeat = row3Seats[randomTatibIndex];
+    
+    // Remove tatib class dari semua row3 seats, tapi keep kurkul dan it
+    row3Seats.forEach(seat => {
+        seat.classList.remove('sie-tatib');
+        seat.dataset.role = '';
+    });
+    
+    // Assign tatib role ke random seat di row 3
+    tatibSeat.dataset.role = 'tatib';
+    tatibSeat.classList.add('sie-tatib');
     
     // Assign angka ke setiap kursi dengan animasi
     seats.forEach((seat, index) => {
@@ -85,11 +112,7 @@ function randomizeSeats() {
             } else if (seat.dataset.role === 'it') {
                 number = it;
             } else if (seat.dataset.role === 'tatib') {
-                // Assign tatib1 untuk kursi tatib pertama, tatib2 untuk kursi tatib kedua
-                number = tatibCount === 0 ? tatib1 : tatib2;
-                tatibCount++;
-            } else if (seat.dataset.role === 'logistik') {
-                number = logistik;
+                number = tatib;
             } else {
                 // Ambil dari available numbers untuk kursi biasa
                 number = availableNumbers.shift();
@@ -103,14 +126,7 @@ function randomizeSeats() {
             } else if (seat.dataset.role === 'it') {
                 document.getElementById('itName').textContent = studentNames[number];
             } else if (seat.dataset.role === 'tatib') {
-                // Update nama untuk tatib1 dan tatib2
-                if (tatibCount === 1) {
-                    document.getElementById('tatib1Name').textContent = studentNames[number];
-                } else {
-                    document.getElementById('tatib2Name').textContent = studentNames[number];
-                }
-            } else if (seat.dataset.role === 'logistik') {
-                document.getElementById('logistikName').textContent = studentNames[number];
+                document.getElementById('tatibName').textContent = studentNames[number];
             }
             
             // Animasi flash
@@ -128,57 +144,17 @@ function getWeekNumber(date) {
     const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
     return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
 }
-// function randomizeSeats() {
-//     // Ambil semua kursi yang bisa di-randomize
-//     const seats = document.querySelectorAll('.seat[data-seat]');
-    
-//     // Buat array dari 1-35
-//     let numbers = Array.from({length: 35}, (_, i) => i + 1);
-    
-//     // Shuffle array menggunakan Fisher-Yates algorithm
-//     for (let i = numbers.length - 1; i > 0; i--) {
-//         const j = Math.floor(Math.random() * (i + 1));
-//         [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
-//     }
-    
-//     // Assign angka ke setiap kursi dengan animasi
-//     seats.forEach((seat, index) => {
-//         setTimeout(() => {
-//             const number = numbers[index];
-//             seat.textContent = number.toString().padStart(2, '0');
-            
-//             // Update special roles jika ada
-//             if (seat.dataset.role === 'kurkul') {
-//                 document.getElementById('kurkulName').textContent = studentNames[number];
-//             } else if (seat.dataset.role === 'it') {
-//                 document.getElementById('itName').textContent = studentNames[number];
-//             } else if (seat.dataset.role === 'logistik') {
-//                 document.getElementById('logistikName').textContent = studentNames[number];
-//             }
-            
-//             // Animasi flash
-//             seat.style.transform = 'scale(1.1)';
-//             setTimeout(() => {
-//                 seat.style.transform = 'scale(1)';
-//             }, 100);
-//         }, index * 30);
-//     });
-// }
 
 // Load initial special roles dari layout default
 window.addEventListener('load', () => {
     const kurkulSeat = document.querySelector('[data-role="kurkul"]');
     const itSeat = document.querySelector('[data-role="it"]');
-    const logistikSeat = document.querySelector('[data-role="logistik"]');
     
     if (kurkulSeat) {
         document.getElementById('kurkulName').textContent = studentNames[parseInt(kurkulSeat.textContent)];
     }
     if (itSeat) {
         document.getElementById('itName').textContent = studentNames[parseInt(itSeat.textContent)];
-    }
-    if (logistikSeat) {
-        document.getElementById('logistikName').textContent = studentNames[parseInt(logistikSeat.textContent)];
     }
 });
 
